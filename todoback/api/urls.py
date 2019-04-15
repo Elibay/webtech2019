@@ -1,8 +1,9 @@
-from django.conf.urls import url, include
+from django.conf.urls import url
 from .views import *
 
 urlpatterns = [
-    url(r'task_lists/', task_list),
-    # url(r'task_lists/', task_list),
-    # url(r'task_lists/', task_list),
+    url(r'task_lists/$', task_list),
+    url(r'task_lists/(?P<pk>\d+)/$', task_list_detail),
+    url(r'task_lists/(?P<pk>\d+)/task/$', task_list_detail_tasks),
+    url(r'task/(?P<pk>\d+)/$', task_detail),
 ]
