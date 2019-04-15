@@ -7,14 +7,21 @@
         <span class="input-group-text" (click)="addTodo(todo.value)">
         <i class="material-icons">add</i></span>
        </div>
-      </div>
-      <div class="data">
-      <ul class="list-unstyled">
-       <li  *ngFor="let todo of todoArray">{{todo}} <i (click)="deleteItem(todo)" class="material-icons">delete</i></li>
-      </ul>
-     </div>
-   </form>
- </div>
+    </div>
+      <!-- <div class="data"> -->
+      <!-- <ul class="list-unstyled"> -->
+       <!-- <li *ngFor="let todo of todoArray">{{tasks.name}} <i (click)="deleteItem(todo)" class="material-icons">delete</i></li> -->
+      <!-- </ul> -->
+      <!-- </div> -->
+    <table>
+      <tr *ngFor="let task of tasks; let i = index;">
+      <td>{{i}}</td>
+      <td>{{task.name}}</td>
+      <td>{{task.id}}</td>
+      </tr>
+    </table>
+  </form>
+</div>
 
  <!-- <div class="container"> -->
   <!-- <form #todoForm= "ngForm"(submit)="todoSubmit(todoForm.value); todoForm.resetForm()" > -->
