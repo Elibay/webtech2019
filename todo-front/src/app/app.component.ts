@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BackendApiService } from './services/backend-api.service';
 import { TaskList } from './models';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
@@ -12,7 +13,7 @@ export class AppComponent implements OnInit {
   public tasks: TaskList[] = [];
   public todo = [];
   
-  constructor() {
+  constructor(private apiService: BackendApiService) {
   }
 
   ngOnInit() {
@@ -20,9 +21,9 @@ export class AppComponent implements OnInit {
     task.name = "123";
     task.id = 123;
     this.tasks.push(task);
-    // this.apiService.getTaskLists().then(res => {
-      // this.tasks = res;
-    // });
+    this.apiService.getTaskLists().then(res => {
+      this.tasks = res;
+    });
     console.log("Hello");
   }
   addTodo(value){
