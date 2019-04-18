@@ -49,10 +49,9 @@ def task_list_detail(request, pk):
 @csrf_exempt
 def task_list_detail_tasks(request, pk):
     try:
-        all_tasks = TaskList.objects.all().exclude(id=pk)
-        task = TaskList.objects.get(id=pk)
-        serializer = TaksListSerializer(all_tasks, many=True)
-        return JsonResponse({'task': task.to_json(), 'others': serializer.data})
+        all_tasks = Task.objects.filter(task_list__id=pk)
+        serializer = TaskSerializer(all_tasks, many=True)
+        return JsonResponse(serializer.data, safe=False)
     except Exception as e:
         return JsonResponse({"error": e.message})
 

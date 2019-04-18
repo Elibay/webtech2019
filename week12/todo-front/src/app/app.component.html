@@ -10,8 +10,14 @@
     </div>
     <div class="data">
       <ul class="list-unstyled">
-        <li *ngFor="let task of tasks; let i = index;">{{task.name}}
+        <li *ngFor="let task of tasks; let i = index;">
+          {{task.name}}
           <i (click)="deleteItem(task)" class="material-icons">delete</i>
+          <ul class="list-unstyled">
+            <li *ngFor="let item of task.task_list; let i = index;" style="background-color:gray">
+              {{item.name + " " + item.status}}
+            </li>
+          </ul>
         </li>
       </ul>
     </div>
