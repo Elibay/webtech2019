@@ -27,9 +27,17 @@ export class AppComponent implements OnInit {
     console.log("Hello");
   }
   addTodo(value){
-    console.log(this.tasks);
+    let task = new TaskList();
+    task.name = value
+    this.tasks.push(task)
+    this.apiService.setTask(task);
   }
-  deleteItem(){
-   console.log("delete item")
+  deleteItem(value){
+    this.apiService.deleteTask(value);
+    for(let i=0 ;i<= this.tasks.length ;i++){
+      if(value== this.tasks[i]){
+       this.tasks.splice(i,1);
+      }
+    }
   }
 }

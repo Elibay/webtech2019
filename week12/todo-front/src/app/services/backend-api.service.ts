@@ -17,6 +17,12 @@ export class BackendApiService extends Main {
   public getTaskLists(): Promise<[TaskList]> {
     return this.get(API_URL + "task_list/", {});
   }
+  public setTask(task: TaskList) {
+    return this.post(API_URL + "task_list/", task);
+  }
+  public deleteTask(task: TaskList) {
+    return this.delete(API_URL + "task_list/" + task.id, task);
+  }
   public getTaskListDetail() {
     // return this.get(API_URL + "task_list/", {});
   }
