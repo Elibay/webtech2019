@@ -8,8 +8,8 @@ from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.utils import json
 
-from .serializers import *
-from .models import *
+from api.serializers import *
+from api.models import *
 
 @csrf_exempt
 def task_list(request):
@@ -37,10 +37,12 @@ def task_list_detail(request, pk):
         return JsonResponse(serializer.data, status=200)
     elif request.method == 'PUT':
         data = json.loads(request.body)
+        print "here"
         serializer = TaksListSerializer(instance=task, data=data)
         if serializer.is_valid():
             serializer.save()  # update function in serializer class
             return JsonResponse(serializer.data, status=200)
+
         return JsonResponse(serializer.errors)
     elif request.method == 'DELETE':
         task.delete()
