@@ -1,3 +1,4 @@
+from django.http import Http404
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -24,21 +25,17 @@ class TasksList(APIView):
 class TasksDetail(APIView):
     def get_object(self, pk):
         try:
-            return True, TaskList.objects.get(id=pk)
+            return TaskList.objects.get(id=pk)
         except Exception as e:
-            return False, Response({'error': str(e.message)}, status=status.HTTP_404_NOT_FOUND)
+            raise Http404
 
     def get(self, request, pk):
-        found, tasks = self.get_object(pk)
-        if not found:
-            return tasks
+        tasks = self.get_object(pk)
         serializer = TaksListSerializer(tasks)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def put(self, request, pk):
-        found, tasks = self.get_object(pk)
-        if not found:
-            return tasks
+        tasks = self.get_object(pk)
         serializer = TaksListSerializer(instance=tasks, data=request.body)
         if serializer.is_valid():
             serializer.save()  # update function in serializer class
@@ -46,9 +43,7 @@ class TasksDetail(APIView):
         return Response(serializer.errors, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     def delete(self, request, pk):
-        found, tasks = self.get_object(pk)
-        if not found:
-            return tasks
+        tasks = self.get_object(pk)
         tasks.delete()
         return Response({}, status=status.HTTP_200_OK)
 
