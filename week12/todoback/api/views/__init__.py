@@ -1,2 +1,2 @@
-from .views import *
 from .cbv import *
+from .auth import *
