@@ -1,0 +1,30 @@
+<div class="container">
+  <form>
+    <div class="form-group">
+      <h1 class="text-center ">Todo App</h1>
+       <div class="input-group-prepend">
+           <input type="text" #todo  class="form-control" placeholder="Add Todo" name="todo" ngModel>
+        <span class="input-group-text" (click)="addTodo(todo.value)">
+        <i class="material-icons">add</i></span>
+       </div>
+    </div>
+    <div class="data">
+      <ul class="list-unstyled">
+        <li *ngFor="let task of tasks; let i = index;">
+          {{task.name}}
+          <i (click)="deleteItem(task)" class="material-icons">delete</i>
+          <ul class="list-unstyled">
+            <li *ngFor="let item of task.task_list; let i = index;" style="background-color:gray">
+              {{item.name + " " + item.status}}
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </form>
+</div>
+
+ <!-- <div class="container"> -->
+  <!-- <form #todoForm= "ngForm"(submit)="todoSubmit(todoForm.value); todoForm.resetForm()" > -->
+   <!-- </form> -->
+ <!-- </div> -->

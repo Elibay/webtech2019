@@ -11,31 +11,15 @@ import { AngularWaitBarrier } from 'blocking-proxy/built/lib/angular_wait_barrie
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  title = 'todo-front';
-  public tasks: TaskList[] = [];
-  public todo = [];
-  
-  constructor(private apiService: BackendApiService) {
+  public logged = false;
+  constructor() {
   }
 
-  async ngOnInit() {
-    this.tasks = await this.apiService.getTaskLists();
-    this.tasks.forEach(async element => {
-      element.task_list = await this.apiService.get_task_list_detail_tasks(element);
-    });
-  }
-  addTodo(value){
-    let task = new TaskList();
-    task.name = value
-    this.tasks.push(task)
-    this.apiService.setTaskList(task);
-  }
-  deleteItem(value){
-    this.apiService.deleteTaskList(value);
-    for(let i=0 ;i<= this.tasks.length; i++){
-      if(value== this.tasks[i]){
-       this.tasks.splice(i,1);
-      }
+  ngOnInit() {
+    const token = localStorage.getItem('token');
+    if (token) {
+      this.logged = true;
     }
   }
+
 }
