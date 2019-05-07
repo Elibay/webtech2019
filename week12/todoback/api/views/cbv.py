@@ -1,5 +1,5 @@
 from django.http import Http404, HttpResponseNotAllowed
-from rest_framework import status
+from rest_framework import status, generics
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -7,20 +7,17 @@ import json
 from api.serializers import *
 
 
-class TaskList(APIView):
+class TaskList(generics.ListCreateAPIView):
     permission_classes = (IsAuthenticated,)
 
-    def get(self, request):
-        tasks = List.objects.all()
-        serializer = ListSerializer(tasks, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+    def get_queryset(self):
+        return List.objects.filter(created_by=self.request.user)
 
-    def post(self, request):
-        serializer = ListSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    def get_serializer_class(self):
+        return ListSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(created_by=self.request.user)
 
 
 class Detail(APIView):
@@ -30,8 +27,8 @@ class Detail(APIView):
     def get_object(request, pk):
         try:
             objc = List.objects.get(id=pk)
-            # if request.user != objc.created_by:
-            #     raise HttpResponseNotAllowed
+            if request.user != objc.created_by:
+                raise HttpResponseNotAllowed
             return objc
         except Exception:
             raise Http404
@@ -46,8 +43,6 @@ class Detail(APIView):
         todo = self.get_object(request, pk)
         Json = json.loads(request.body)
         serializer = TaskSerializer(data=Json)
-        # print request.body
-        # serializer = TaskSerializer(data=request.body)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)

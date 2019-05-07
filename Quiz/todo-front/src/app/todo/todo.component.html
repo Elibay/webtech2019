@@ -1,0 +1,35 @@
+<div class="container">
+
+  <form>
+    <div class="form-group">
+      <h1 class="text-center "> Contacts </h1>
+       <div class="input-group-prepend">
+           <input type="text" #name  class="form-control" placeholder="Name" name="name" ngModel>
+         <input type="text" #phone  class="form-control" placeholder="Phone" name="phone" ngModel>
+        <span class="input-group-text" (click)="addTodo(name.value, phone.value)">
+        <i class="material-icons">add</i></span>
+       </div>
+    </div>
+    <div class="data">
+      <ul class="list-unstyled">
+        <li *ngFor="let todo of todos; let i = index;">
+          <ng-container *ngIf="!todo.editing">
+            {{todo.name}}
+            <i (click)="deleteItem(todo)" class="material-icons">delete</i>
+            <i (click)="editItem(todo)" class="material-icons">edit</i>
+          </ng-container>
+          <ng-container *ngIf="todo.editing">
+            <input type="text" [(ngModel)]="todo.name" [ngModelOptions]="{standalone: true}"/>
+            <br/>
+            <input type="text" [(ngModel)]="todo.phone" [ngModelOptions]="{standalone: true}"/>
+            <i (click)="deleteItem(todo)" class="material-icons">delete</i>
+            <i (click)="editItem(todo)" class="material-icons">done</i>
+          </ng-container>
+        </li>
+      </ul>
+    </div>
+    <div class="logout">
+      <button (click)="logout()">Log out</button>
+    </div>
+  </form>
+</div>

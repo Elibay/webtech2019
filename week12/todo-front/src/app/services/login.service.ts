@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Main} from './main.service';
-import {AuthResponse} from '../models';
+import {AuthResponse} from '../models/models';
 
 @Injectable({
   providedIn: 'root'
