@@ -1,0 +1,7 @@
+<ng-container *ngIf="!logged">
+  <app-login></app-login>
+</ng-container>
+
+<ng-container *ngIf="logged">
+  <app-todo></app-todo>
+</ng-container>

@@ -1,0 +1,56 @@
+<div class="container">
+  <div class="logout">
+      <button (click)="logout()">Log out</button>
+  </div>
+  <form>
+    <div class="form-group">
+      <h1 class="text-center "> Products </h1>
+       <div class="input-group-prepend">
+         <input type="text" #name  class="form-control" placeholder="Name" name="name" ngModel>
+        <span class="input-group-text" (click)="search(name.value)">
+        <i class="material-icons">search</i></span>
+       </div>
+    </div>
+    <div class="data">
+      <ul class="list-unstyled">
+        <li *ngFor="let product of products; let i = index;">
+          name: {{product.name}}
+          <br>
+          price: {{product.price}}
+          <br>
+          quantity: {{product.quantity}}
+          <br>
+          <input type="text" [(ngModel)]="toAdd[i]" [ngModelOptions]="{standalone: true}"/>
+          <i (click)="addToBasked(i)" class="material-icons">add</i>
+        </li>
+      </ul>
+    </div>
+  </form>
+
+  <form>
+    <div class="form-group">
+      <h1 class="text-center "> User Products </h1>
+       <div class="input-group-prepend">
+         <input type="text" #name  class="form-control" placeholder="Name" name="name" ngModel>
+        <span class="input-group-text" (click)="search(name.value)">
+        <i class="material-icons">search</i></span>
+       </div>
+    </div>
+    <div class="data">
+      <ul class="list-unstyled">
+        <li *ngFor="let up of userProducts; let i = index;">
+          name: {{up.product.name}}
+          <br>
+          price: {{up.product.price}}
+          <i (click)="delete(up)" class="material-icons">delete</i>
+          <br>
+          count: {{up.count}}
+          <br>
+        </li>
+      </ul>
+    </div>
+    <div style="margin-left: 15em;">
+      {{totalPrice}}
+    </div>
+  </form>
+</div>
